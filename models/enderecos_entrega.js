@@ -1,27 +1,39 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { DataTypes } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
-  class Enderecos_entrega extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+    const Enderecos_Entrega = sequelize.define('Enderecos_Entrega', {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        Cliente_idCliente: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        endereco: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        rua: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        bairro: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        cidade: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
+    });
+
+    Enderecos_Entrega.associate = (models) => {
+        Enderecos_Entrega.belongsTo(models.Cliente, { foreignKey: 'Cliente_idCliente' });
     }
-  }
-  Enderecos_entrega.init({
-    Cliente_idCliente: DataTypes.INTEGER,
-    endereco: DataTypes.STRING,
-    rua: DataTypes.STRING,
-    bairro: DataTypes.STRING,
-    cidade: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Enderecos_entrega',
-  });
-  return Enderecos_entrega;
-};
+
+    return Enderecos_Entrega;
+}

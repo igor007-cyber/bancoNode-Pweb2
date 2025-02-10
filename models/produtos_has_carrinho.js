@@ -1,57 +1,60 @@
 'use strict';
-const { Model } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-  class ProdutosHasCarrinho extends Model {
-    static associate(models) {
-      
-      this.belongsTo(models.Produto, {
-        foreignKey: 'idproduto',
-        as: 'produto'
-      });
+const { DataTypes } = require("sequelize");
 
-      
-      this.belongsTo(models.Carrinho, {
-        foreignKey: 'idcarrinho',
-        as: 'carrinho'
-      });
-    }
-  }
-
-  ProdutosHasCarrinho.init(
-    {
-      idproduto: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Produtos', 
-          key: 'id'
+module.exports = (sequelize) => {
+    const ProdutosHasCarrinho = sequelize.define('ProdutosHasCarrinho', {
+        idproduto: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            references: {
+                model: 'Produtos', 
+                key: 'id'
+            }
+        },
+        idcarrinho: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            references: {
+                model: 'Carrinhos',
+                key: 'id'
+            }
+        },
+        quantidade: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+            validate: {
+                min: 1
+            }
+        },
+        preco_unitario: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            validate: {
+                min: 0
+            }
         }
-      },
-      idcarrinho: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Carrinhos',
-          key: 'id'
-        }
-      },
-      quantidade: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      preco_unitario: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-      }
-    },
-    {
-      sequelize,
-      modelName: 'ProdutosHasCarrinho',
-      tableName: 'produtos_has_carrinho',
-      timestamps: false
-    }
-  );
+    }, {
+        tableName: 'produtos_has_carrinho',
+        timestamps: false
+    });
 
-  return ProdutosHasCarrinho;
+    ProdutosHasCarrinho.associate = (models) => {
+        // Associação com Produto (Muitos para Muitos)
+        ProdutosHasCarrinho.belongsTo(models.Produto, {
+            foreignKey: 'idproduto',
+            as: 'produto'
+        });
+
+        // Associação com Carrinho (Muitos para Muitos)
+        ProdutosHasCarrinho.belongsTo(models.Carrinho, {
+            foreignKey: 'idcarrinho',
+            as: 'carrinho'
+        });
+    };
+
+    return ProdutosHasCarrinho;
 };

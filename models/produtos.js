@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'produtos_idproduto'
         });
         // Um produto pode estar em vários pedidos
-        Produto.belongsToMany(models.Pedido, {
+        Produto.hasMany(models.Pedido, {
             through: models.pedido_has_produtos,
             foreignKey: 'produto_idproduto'
         });

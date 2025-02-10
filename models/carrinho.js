@@ -1,24 +1,31 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { DataTypes } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
-  class Carrinho extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Carrinho.init({
-    data_criacao: DataTypes.DATE,
-    status: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Carrinho',
-  });
-  return Carrinho;
+    const Carrinho = sequelize.define('Carrinho', {
+        idCarrinho: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        data_criacao: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        status: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        }
+    });
+
+    Carrinho.associate = (models) => {
+        // Um carrinho pode ter vários produtos
+        Carrinho.hasMany(models.Produto, {
+            through: models.produtos_has_Carrinho,
+            foreignKey: 'idCarrinho'
+        });
+    };
+
+    return Carrinho;
 };

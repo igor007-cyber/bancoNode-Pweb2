@@ -1,26 +1,48 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Usuario extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+  const Usuario = sequelize.define('Usuario',
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nome: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      senha: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
+      },
+      tipo: {
+        type: DataTypes.TINYINT, // Melhor para representar booleano em MySQL
+        allowNull: false,
+        defaultValue: 0, // 0 = usuário comum, 1 = admin
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Usuario',
+      tableName: 'usuario', // Garante o nome correto da tabela
+      timestamps: true, // createdAt e updatedAt
     }
-  }
-  Usuario.init({
-    nome: DataTypes.STRING,
-    senha: DataTypes.STRING,
-    email: DataTypes.STRING,
-    tipo: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Usuario',
-  });
+  );
+
+  Usuario.associate = (models) => {
+    Usuario.hasOne(models.Cliente, { foreignKey: 'idUsuario' });
+  };
+
   return Usuario;
 };

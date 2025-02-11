@@ -37,13 +37,7 @@ module.exports = {
       
       idUsuario: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Usuarios',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

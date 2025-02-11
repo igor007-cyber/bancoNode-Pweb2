@@ -25,19 +25,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      qtdEstoque: {  // Padronizado para camelCase
+      qtdEstoque: {  
         type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') // Define valor padrão
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') 
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP') // Atualiza automaticamente
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       }
     });
   },

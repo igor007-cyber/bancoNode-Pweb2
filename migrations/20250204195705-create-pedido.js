@@ -40,13 +40,7 @@ module.exports = {
 
       Cliente_idCliente: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'clientes', 
-          key: 'idCliente'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        allowNull: false
       },
 
       descricao: {

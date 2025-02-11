@@ -39,7 +39,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Enderecos_Entrega', 'Cliente_idCliente');
+    await queryInterface.removeColumn('enderecos_entrega', 'Cliente_idCliente');
     await queryInterface.removeColumn('produtos_has_Carrinho', 'produtos_idproduto');
     await queryInterface.removeColumn('pedido_has_produtos', 'produto_idproduto');
   }

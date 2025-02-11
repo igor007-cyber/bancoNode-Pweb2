@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        clienteId: { // Nome melhor para a foreign key
+        clienteId: { 
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
         sequelize,
         modelName: 'EnderecoEntrega',
         tableName: 'enderecos_entrega', // Define o nome correto da tabela no BD
-        timestamps: true, // createdAt e updatedAt
+        timestamps: true, 
     });
 
     EnderecoEntrega.associate = (models) => {

@@ -17,7 +17,7 @@ module.exports = {
       status: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: true // Definir o padrão como ativo
+        defaultValue: true 
       },
       createdAt: {
         allowNull: false,

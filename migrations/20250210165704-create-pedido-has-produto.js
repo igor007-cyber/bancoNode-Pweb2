@@ -12,16 +12,10 @@ module.exports = {
       idpedido: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Pedidos', key: 'id' }, // Define chave estrangeira
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       idproduto: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Produtos', key: 'id' }, // Define chave estrangeira
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       quantidade: {
         type: Sequelize.INTEGER,

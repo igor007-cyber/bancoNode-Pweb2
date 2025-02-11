@@ -42,14 +42,12 @@ module.exports = (sequelize) => {
         timestamps: false
     });
 
-    PedidoHasProduto.associate = (models) => {
-        // Associação com Pedido (Muitos para Muitos)
+    PedidoHasProduto.associate = (models) => {  
         PedidoHasProduto.belongsTo(models.Pedido, {
             foreignKey: 'idpedido',
             as: 'pedido'
         });
 
-        // Associação com Produto (Muitos para Muitos)
         PedidoHasProduto.belongsTo(models.Produto, {
             foreignKey: 'idproduto',
             as: 'produto'

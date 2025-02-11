@@ -2,14 +2,14 @@
 
 const { DataTypes } = require("sequelize");
 
-module.exports = (sequelize, DataTypes) => {
-    const Enderecos_Entrega = sequelize.define('Enderecos_Entrega', {
+module.exports = (sequelize) => {
+    const EnderecoEntrega = sequelize.define('EnderecoEntrega', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        Cliente_idCliente: {
+        clienteId: { // Nome melhor para a foreign key
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -29,11 +29,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         }
+    }, {
+        sequelize,
+        modelName: 'EnderecoEntrega',
+        tableName: 'enderecos_entrega', // Define o nome correto da tabela no BD
+        timestamps: true, // createdAt e updatedAt
     });
 
-    Enderecos_Entrega.associate = (models) => {
-        Enderecos_Entrega.belongsTo(models.Cliente, { foreignKey: 'Cliente_idCliente' });
-    }
+    EnderecoEntrega.associate = (models) => {
+        EnderecoEntrega.belongsTo(models.Cliente, { foreignKey: 'clienteId' });
+    };
 
-    return Enderecos_Entrega;
-}
+    return EnderecoEntrega;
+};

@@ -32,12 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Produto.associate = (models) => {
-        // Um produto pode estar em vários carrinhos
         Produto.hasMany(models.Carrinho, {
             through: models.produtos_has_Carrinho,
             foreignKey: 'produtos_idproduto'
-        });
-        // Um produto pode estar em vários pedidos
+        });        
         Produto.hasMany(models.Pedido, {
             through: models.pedido_has_produtos,
             foreignKey: 'produto_idproduto'

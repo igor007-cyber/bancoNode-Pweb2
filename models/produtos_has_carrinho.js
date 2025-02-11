@@ -43,13 +43,11 @@ module.exports = (sequelize) => {
     });
 
     ProdutosHasCarrinho.associate = (models) => {
-        // Associação com Produto (Muitos para Muitos)
         ProdutosHasCarrinho.belongsTo(models.Produto, {
             foreignKey: 'idproduto',
             as: 'produto'
         });
 
-        // Associação com Carrinho (Muitos para Muitos)
         ProdutosHasCarrinho.belongsTo(models.Carrinho, {
             foreignKey: 'idcarrinho',
             as: 'carrinho'

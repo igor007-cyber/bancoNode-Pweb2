@@ -2,42 +2,52 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('produtos_has_carrinhos', {
+    await queryInterface.createTable('ProdutoHasCarrinhos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idproduto: {
+      idProduto: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Produtos',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
-      idcarrinho: {
+      idCarrinho: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Carrinhos',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       quantidade: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       preco_unitario: {
         type: Sequelize.FLOAT,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('produtos_has_carrinhos');
+    await queryInterface.dropTable('ProdutoHasCarrinhos');
   }
 };

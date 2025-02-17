@@ -2,20 +2,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('pedido_has_produtos', {
+    await queryInterface.createTable('PedidoHasProdutos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idpedido: {
+      idPedido: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Pedidos',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
-      idproduto: {
+      idProduto: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Produtos',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       quantidade: {
         type: Sequelize.INTEGER,
@@ -27,18 +39,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') 
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('pedido_has_produtos');
+    await queryInterface.dropTable('PedidoHasProdutos');
   }
 };

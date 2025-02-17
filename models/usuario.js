@@ -1,48 +1,41 @@
-  'use strict';
+'use strict';
+const { Model } = require('sequelize');
 
-  const { DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Usuario extends Model {
+    static associate(models) {
+      // Um Usuario pode ter muitos Clientes
+      Usuario.hasMany(models.Cliente, {
+        foreignKey: 'idUsuario',
+        as: 'clientes'
+      });
+    }
+  }
 
-  module.exports = (sequelize) => {
-    const Usuario = sequelize.define('Usuario',
-      {
-        id: {
-          type: DataTypes.INTEGER,
-          primaryKey: true,
-          autoIncrement: true,
-        },
-        nome: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-        },
-        senha: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-        },
-        email: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          unique: true,
-          validate: {
-            isEmail: true,
-          },
-        },
-        tipo: {
-          type: DataTypes.TINYINT, 
-          allowNull: false,
-          defaultValue: 0, 
-        },
-      },
-      {
-        sequelize,
-        modelName: 'Usuario',
-        tableName: 'usuario', 
-        timestamps: true,
-      }
-    );
+  Usuario.init({
+    nome: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    senha: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    tipo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    }
+  }, {
+    sequelize,
+    modelName: 'Usuario',
+    tableName: 'usuarios',
+    timestamps: false
+  });
 
-    Usuario.associate = (models) => {
-      Usuario.hasOne(models.Cliente, { foreignKey: 'idUsuario' });
-    };
-
-    return Usuario;
-  };
+  return Usuario;
+};

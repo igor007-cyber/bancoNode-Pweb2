@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Produtos', {
+    await queryInterface.createTable('Usuarios', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,36 +13,30 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      descricao: {
+      senha: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      preco: {
-        type: Sequelize.FLOAT,
-        allowNull: false
-      },
-      categoria: {
+      email: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
-      qtdEstoque: {  
-        type: Sequelize.INTEGER,
+      tipo: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') 
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Produtos');
+    await queryInterface.dropTable('Usuarios');
   }
 };

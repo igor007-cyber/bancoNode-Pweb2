@@ -1,47 +1,56 @@
 'use strict';
-
-const { DataTypes } = require("sequelize");
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    const Pedido = sequelize.define('Pedido', {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        data_pedido: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        status: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
-        valor_total: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        data_envio: {
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
-        data_status: {
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
-        Cliente_idCliente: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        descricao: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        }
-    });
+  class Pedido extends Model {
+    static associate(models) {
+      // Um Pedido pertence a um Cliente
+      Pedido.belongsTo(models.Cliente, {
+        foreignKey: 'idCliente',
+        as: 'cliente'
+      });
 
-    Pedido.associate = (models) => {
-        Pedido.belongsTo(models.Cliente, { foreignKey: 'Cliente_idCliente' });
+      // Um Pedido tem muitos Produtos através de PedidoHasProduto
+      Pedido.hasMany(models.Produto, {
+        through: models.PedidoHasProduto,
+        foreignKey: 'idPedido',
+        as: 'produtos'
+      });
+
+      // Um Pedido pode ter um EnderecoEntrega
+      Pedido.hasOne(models.EnderecoEntrega, {
+        foreignKey: 'idPedido',
+        as: 'enderecoEntrega'
+      });
     }
+  }
 
-    return Pedido;
-}
+  Pedido.init({
+    data_pedido: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    valor_total: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    data_envio: DataTypes.DATE,
+    data_status: DataTypes.DATE,
+    idCliente: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    descricao: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Pedido',
+    tableName: 'pedidos',
+    timestamps: false
+  });
+
+  return Pedido;
+};

@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Carrinhos', {
-      idCarrinho: { // Nome adequado conforme seu diagrama ER
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -11,27 +11,22 @@ module.exports = {
       },
       data_criacao: {
         type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        allowNull: false
       },
       status: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: true 
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Carrinhos');
   }

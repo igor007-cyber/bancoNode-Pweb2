@@ -1,16 +1,17 @@
 {
   "development": {
     "username": "root",
-    "password": "aluno",
+    "password": "1234",
     "database": "sitevendas",
     "host": "127.0.0.1",
+    "port": 3001,
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
-    "host": "127.0.0.1",
+    "host": "127.0.0.1:3001",
     "dialect": "mysql"
   },
   "production": {

@@ -2,25 +2,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Clientes', {
+    await queryInterface.createTable('EnderecoEntregas', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nome: {
+      endereco: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      telefone: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      cpf: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
       },
       rua: {
         type: Sequelize.STRING,
@@ -34,24 +25,27 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      
-      idUsuario: {
+      idCliente: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true,
+        references: {
+          model: 'Clientes',  // Alterado de 'Pedidos' para 'Clientes'
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Clientes');
+    await queryInterface.dropTable('EnderecoEntregas');
   }
 };

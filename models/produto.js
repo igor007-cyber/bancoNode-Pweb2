@@ -4,14 +4,14 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Produto extends Model {
     static associate(models) {
-      // Um Produto pode estar em muitos Pedidos (através de PedidoHasProduto)
+     
       Produto.hasMany(models.Pedido, {
         through: models.PedidoHasProduto,
         foreignKey: 'idProduto',
         as: 'pedidos'
       });
 
-      // Um Produto pode estar em muitos Carrinhos (através de ProdutoHasCarrinho)
+      
       Produto.hasMany(models.Carrinho, {
         through: models.ProdutoHasCarrinho,
         foreignKey: 'idProduto',

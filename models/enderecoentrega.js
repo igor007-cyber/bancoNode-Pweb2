@@ -4,9 +4,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class EnderecoEntrega extends Model {
     static associate(models) {
-      // Um EnderecoEntrega pertence a um Cliente
+
       EnderecoEntrega.belongsTo(models.Cliente, {
-        foreignKey: 'idCliente', // Alterado de 'idPedido' para 'idCliente'
+        foreignKey: 'idCliente', 
         as: 'cliente'
       });
     }
@@ -20,14 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     rua: DataTypes.STRING,
     bairro: DataTypes.STRING,
     cidade: DataTypes.STRING,
-    idCliente: { // Alterado de 'idPedido' para 'idCliente'
+    idCliente: { 
       type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
     sequelize,
     modelName: 'EnderecoEntrega',
-    tableName: 'EnderecoEntregas', // Certifique-se de que o nome da tabela está correto
+    tableName: 'EnderecoEntregas', 
     timestamps: false
   });
 

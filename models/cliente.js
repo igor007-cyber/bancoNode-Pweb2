@@ -4,13 +4,13 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Cliente extends Model {
     static associate(models) {
-      // Um Cliente pertence a um Usuario
+      
       Cliente.belongsTo(models.Usuario, {
         foreignKey: 'idUsuario',
         as: 'usuario'
       });
 
-      // Um Cliente pode ter muitos Pedidos
+      
       Cliente.hasMany(models.Pedido, {
         foreignKey: 'idCliente',
         as: 'pedidos'

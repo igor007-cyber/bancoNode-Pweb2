@@ -1,10 +1,9 @@
 'use strict';
-const { Model } = require('sequelize');
+import { Model}  from 'sequelize';
 
 module.exports = (sequelize, DataTypes) => {
   class Usuario extends Model {
     static associate(models) {
-      // Um Usuario pode ter muitos Clientes
       Usuario.hasMany(models.Cliente, {
         foreignKey: 'idUsuario',
         as: 'clientes'

@@ -16,7 +16,7 @@ export const createPedido = async (req, res) => {
 export const getAllPedidos = async (req, res) => {
   try {
     const pedidos = await db.Pedido.findAll({
-      include: [{ model: db.Cliente, as: 'Cliente' }], // Relacionamento com Cliente
+      include: [{ model: db.Cliente, as: 'Cliente' }], // Relacionamento com Client
     });
     res.status(200).json({ message: 'Lista de pedidos recuperada com sucesso', pedidos });
   } catch (error) {

@@ -4,7 +4,6 @@ import db from '../models/index.js';
 export const createProduto = async (req, res) => {
   const { nome, descricao, preco, categoria, qtd_estoque } = req.body;
 
-  //aqui ele cria um produto
   try {
     const produto = await db.Produto.create({ nome, descricao, preco, categoria, qtd_estoque });
     res.status(201).json({ message: 'Produto criado com sucesso', produto });
@@ -43,7 +42,6 @@ export const getProdutoById = async (req, res) => {
   }
 };
 
-// Atualiza as informações de um produto específico
 export const updateProduto = async (req, res) => {
   const { id } = req.params;
   const { nome, descricao, preco, categoria, qtd_estoque } = req.body;

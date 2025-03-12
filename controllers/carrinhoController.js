@@ -77,4 +77,28 @@ export const deleteCarrinho = async (req, res) => {
     console.error('Erro ao deletar carrinho:', error);
     res.status(500).json({ message: 'Erro ao deletar carrinho' });
   }
+}
+
+  export const addCarrinho = async (req, res) => {
+    const { idCliente, idProduto, qtdProduto } = req.body;
+  
+    try {
+      // Buscar o cliente
+      const cliente = await db.Cliente.findByPk(idCliente);
+      if (!cliente) {
+        return res.status(404).json({ message: 'Cliente não encontrado' });
+      }
+  
+      // Buscar o produto
+      const produto = await db.Produto.findByPk(idProduto);
+      if (!produto) {
+        return res.status(404).json({ message: 'Produto não encontrado' });
+      }
+  
+      
+      res.status(200).json({ message: 'Produto adicionado ao carrinho com sucesso', carrinho });
+    } catch (error) {
+      console.error('Erro ao adicionar produto ao carrinho:', error);
+      res.status(500).json({ message: 'Erro ao adicionar produto ao carrinho' });
+    }
 };

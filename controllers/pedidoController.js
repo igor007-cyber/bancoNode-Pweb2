@@ -89,19 +89,20 @@ export const addProduto = async (req, res) => {
   const { idProduto, qtdProduto } = req.body;
 
   try {
-    //pesquisar o pedido por id e verificar a situacao
-    //pesquisar se o produto existe
-    //verificar quantidade
-
-    const produto = await db.Produto.findByPk(id);
-    if (!produto) {
-      return res.status(404).json({ message: 'Produto não encontrado' });
+    // Buscar o pedido por ID
+    const pedido = await db.Pedido.findByPk(id);
+    if (!pedido) {
+      return res.status(404).json({ message: 'Pedido não encontrado' });
     }
 
-    await produto.destroy();
-    res.status(200).json({ message: 'Produto deletado com sucesso' });
-  } catch (error) {
-    console.error('Erro ao deletar produto:', error);
-    res.status(500).json({ message: 'Erro ao deletar produto' });
-  }
+    // Verificar se o status do pedido permite adicionar produtos.
+    if (pedido.status !== 1) {
+      return res.status(400).json({ message: 'Não é possível adicionar produtos a um pedido finalizado' });
+    }
+
+  res.status(200).json({ message: 'Produto adicionado ao pedido com sucesso' });
+} catch (error) {
+  console.error('Erro ao adicionar produto ao pedido:', error);
+  res.status(500).json({ message: 'Erro ao adicionar produto ao pedido' });
+}
 };

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import express from 'express';
 import {
   createPedido,
@@ -21,27 +20,3 @@ router.put('/pedidos/:id', authenticationToken, updatePedido);
 router.delete('/pedidos/:id', authenticationToken, deletePedido);
 
 export default router;
-=======
-import express from 'express';
-import {
-  createPedido,
-  listPedidos,
-  getPedidoById,
-  getPedidosByCliente,
-  updatePedido,
-  deletePedido,
-} from '../controllers/pedidoController.js';
-import { authenticationToken } from '../middleware/authMiddleware.js';
-
-const router = express.Router();
-
-// Rotas protegidas para pedidos
-router.post('/pedidos', authenticationToken, createPedido);
-router.get('/pedidos', authenticationToken, listPedidos);
-router.get('/pedidos/:id', authenticationToken, getPedidoById);
-router.get('/pedidos/cliente/:id', authenticationToken, getPedidosByCliente);
-router.put('/pedidos/:id', authenticationToken, updatePedido);
-router.delete('/pedidos/:id', authenticationToken, deletePedido);
-
-export default router;
->>>>>>> f7f82418d8d34c59f64b67edae97c3a85f7aa436

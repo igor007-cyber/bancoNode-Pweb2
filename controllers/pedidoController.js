@@ -100,6 +100,25 @@ export const addProduto = async (req, res) => {
       return res.status(400).json({ message: 'Não é possível adicionar produtos a um pedido finalizado' });
     }
 
+    // Buscar o produto por ID
+   const produto = await db.Produto.findByPk(idProduto);
+    if (!produto) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
+  }
+
+  // Verificar se há estoque suficiente
+   if (produto.qtd_estoque < qtdProduto) {
+      return res.status(400).json({ message: 'Quantidade insuficiente no estoque' });
+  }
+
+ 
+
+
+
+
+
+
+
   res.status(200).json({ message: 'Produto adicionado ao pedido com sucesso' });
 } catch (error) {
   console.error('Erro ao adicionar produto ao pedido:', error);

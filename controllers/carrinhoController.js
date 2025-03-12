@@ -95,7 +95,26 @@ export const deleteCarrinho = async (req, res) => {
         return res.status(404).json({ message: 'Produto não encontrado' });
       }
   
-      
+      // Verificar se há estoque suficiente
+      if (produto.qtd_estoque < qtdProduto) {
+        return res.status(400).json({ message: 'Quantidade insuficiente no estoque' });
+      }
+  
+      // Criar ou atualizar o carrinho
+      const [carrinho, created] = await db.Carrinho.findOrCreate({
+        where: { idCliente, idProduto },
+        defaults: { quantidade: qtdProduto },
+      });
+  
+      if (!created) {
+        carrinho.quantidade += qtdProduto;
+        await carrinho.save();
+      }
+  
+      // Atualizar o estoque do produto
+      produto.qtd_estoque -= qtdProduto;
+      await produto.save();
+  
       res.status(200).json({ message: 'Produto adicionado ao carrinho com sucesso', carrinho });
     } catch (error) {
       console.error('Erro ao adicionar produto ao carrinho:', error);

@@ -111,12 +111,17 @@ export const addProduto = async (req, res) => {
       return res.status(400).json({ message: 'Quantidade insuficiente no estoque' });
   }
 
- 
+  // Registrar a associação do produto ao pedido
+  await db.PedidoHasProduto.create({
+    pedido_idpedido: id,
+    produto_idproduto: idProduto,
+    quantidade: qtdProduto,
+    preco_unitario: produto.preco,
+  });
 
-
-
-
-
+  // Atualizar o estoque do produto
+  produto.qtd_estoque -= qtdProduto;
+  await produto.save();
 
 
   res.status(200).json({ message: 'Produto adicionado ao pedido com sucesso' });

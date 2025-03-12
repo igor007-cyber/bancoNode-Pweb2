@@ -16,11 +16,7 @@ export const createPedido = async (req, res) => {
 export const getAllPedidos = async (req, res) => {
   try {
     const pedidos = await db.Pedido.findAll({
-<<<<<<< HEAD
-      include: [{ model: db.Cliente, as: 'Cliente' }], // Relacionamento com Cliente, se houver
-=======
       include: [{ model: db.Cliente, as: 'Cliente' }], // Relacionamento com Client
->>>>>>> f7f82418d8d34c59f64b67edae97c3a85f7aa436
     });
     res.status(200).json({ message: 'Lista de pedidos recuperada com sucesso', pedidos });
   } catch (error) {
@@ -87,7 +83,6 @@ export const deletePedido = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar pedido' });
   }
 };
-<<<<<<< HEAD
 
 export const addProduto = async (req, res) => {
   const { id } = req.params;
@@ -110,5 +105,3 @@ export const addProduto = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar produto' });
   }
 };
-=======
->>>>>>> f7f82418d8d34c59f64b67edae97c3a85f7aa436

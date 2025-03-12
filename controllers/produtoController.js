@@ -82,4 +82,7 @@ export const deleteProduto = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar produto' });
   }
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> f7f82418d8d34c59f64b67edae97c3a85f7aa436

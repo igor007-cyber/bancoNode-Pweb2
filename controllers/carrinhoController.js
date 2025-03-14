@@ -77,47 +77,43 @@ export const deleteCarrinho = async (req, res) => {
     console.error('Erro ao deletar carrinho:', error);
     res.status(500).json({ message: 'Erro ao deletar carrinho' });
   }
-}
+};
+v
+export const addCarrinho = async (req, res) => {
+  const { idCarrinho, idProduto, quantidade } = req.body;
 
-  export const addCarrinho = async (req, res) => {
-    const { idCliente, idProduto, qtdProduto } = req.body;
-  
-    try {
-      // Buscar o cliente
-      const cliente = await db.Cliente.findByPk(idCliente);
-      if (!cliente) {
-        return res.status(404).json({ message: 'Cliente não encontrado' });
-      }
-  
-      // Buscar o produto
-      const produto = await db.Produto.findByPk(idProduto);
-      if (!produto) {
-        return res.status(404).json({ message: 'Produto não encontrado' });
-      }
-  
-      // Verificar se há estoque suficiente
-      if (produto.qtd_estoque < qtdProduto) {
-        return res.status(400).json({ message: 'Quantidade insuficiente no estoque' });
-      }
-  
-      // Criar ou atualizar o carrinho
-      const [carrinho, created] = await db.Carrinho.findOrCreate({
-        where: { idCliente, idProduto },
-        defaults: { quantidade: qtdProduto },
-      });
-  
-      if (!created) {
-        carrinho.quantidade += qtdProduto;
-        await carrinho.save();
-      }
-  
-      // Atualizar o estoque do produto
-      produto.qtd_estoque -= qtdProduto;
-      await produto.save();
-  
-      res.status(200).json({ message: 'Produto adicionado ao carrinho com sucesso', carrinho });
-    } catch (error) {
-      console.error('Erro ao adicionar produto ao carrinho:', error);
-      res.status(500).json({ message: 'Erro ao adicionar produto ao carrinho' });
+  try {
+    // 🔹 Verifica se o carrinho existe
+    const carrinho = await db.Carrinho.findByPk(idCarrinho);
+    if (!carrinho) {
+      return res.status(404).json({ message: 'Carrinho não encontrado' });
     }
+
+    // 🔹 Verifica se o produto existe
+    const produto = await db.Produto.findByPk(idProduto);
+    if (!produto) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
+    }
+
+    // 🔹 Verifica se há estoque suficiente
+    if (produto.qtd_estoque < quantidade) {
+      return res.status(400).json({ message: 'Estoque insuficiente para a quantidade solicitada' });
+    }
+
+    // 🔹 Atualiza o estoque do produto
+    produto.qtd_estoque -= quantidade;
+    await produto.save();
+
+    // 🔹 Adiciona o produto ao carrinho (supondo que existe um modelo CarrinhoProduto para associar)
+    await db.CarrinhoProduto.create({
+      CarrinhoId: idCarrinho,
+      ProdutoId: idProduto,
+      quantidade: quantidade
+    });
+
+    res.status(200).json({ message: 'Produto adicionado ao carrinho com sucesso' });
+  } catch (error) {
+    console.error('Erro ao adicionar produto ao carrinho:', error);
+    res.status(500).json({ message: 'Erro ao adicionar produto ao carrinho' });
+  }
 };

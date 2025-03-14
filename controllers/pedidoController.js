@@ -85,48 +85,47 @@ export const deletePedido = async (req, res) => {
 };
 
 export const addProduto = async (req, res) => {
-  const { id } = req.params;
-  const { idProduto, qtdProduto } = req.body;
+  const { id } = req.params; // ID do pedido
+  const { idProduto, qtdProduto } = req.body; // Dados do produto a ser adicionado
 
   try {
-    // Buscar o pedido por ID
+    // 🔹 Verifica se o pedido existe
     const pedido = await db.Pedido.findByPk(id);
     if (!pedido) {
       return res.status(404).json({ message: 'Pedido não encontrado' });
     }
 
-    // Verificar se o status do pedido permite adicionar produtos.
-    if (pedido.status !== 1) {
-      return res.status(400).json({ message: 'Não é possível adicionar produtos a um pedido finalizado' });
+    // 🔹 Verifica se o pedido ainda está aberto para modificações
+    if (pedido.status !== 'aberto') {
+      return res.status(400).json({ message: 'Não é possível adicionar produtos a um pedido fechado' });
     }
 
-    // Buscar o produto por ID
-   const produto = await db.Produto.findByPk(idProduto);
+    // 🔹 Verifica se o produto existe
+    const produto = await db.Produto.findByPk(idProduto);
     if (!produto) {
       return res.status(404).json({ message: 'Produto não encontrado' });
+    }
+
+    // 🔹 Verifica se há estoque suficiente
+    if (produto.qtd_estoque < qtdProduto) {
+      return res.status(400).json({ message: 'Estoque insuficiente para a quantidade solicitada' });
+    }
+
+    // 🔹 Atualiza o estoque do produto
+    produto.qtd_estoque -= qtdProduto;
+    await produto.save();
+
+    // 🔹 Adiciona o produto ao pedido (supondo que existe um modelo PedidoProduto para associar)
+    await db.PedidoProduto.create({
+      PedidoId: id,
+      ProdutoId: idProduto,
+      quantidade: qtdProduto
+    });
+
+    res.status(200).json({ message: 'Produto adicionado ao pedido com sucesso' });
+  } catch (error) {
+    console.error('Erro ao adicionar produto ao pedido:', error);
+    res.status(500).json({ message: 'Erro ao adicionar produto ao pedido' });
   }
-
-  // Verificar se há estoque suficiente
-   if (produto.qtd_estoque < qtdProduto) {
-      return res.status(400).json({ message: 'Quantidade insuficiente no estoque' });
-  }
-
-  // Registrar a associação do produto ao pedido
-  await db.PedidoHasProduto.create({
-    pedido_idpedido: id,
-    produto_idproduto: idProduto,
-    quantidade: qtdProduto,
-    preco_unitario: produto.preco,
-  });
-
-  // Atualizar o estoque do produto
-  produto.qtd_estoque -= qtdProduto;
-  await produto.save();
-
-
-  res.status(200).json({ message: 'Produto adicionado ao pedido com sucesso' });
-} catch (error) {
-  console.error('Erro ao adicionar produto ao pedido:', error);
-  res.status(500).json({ message: 'Erro ao adicionar produto ao pedido' });
-}
 };
+

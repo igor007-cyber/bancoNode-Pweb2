@@ -1,4 +1,3 @@
-// controllers/produtoController.js
 import db from '../models/index.js';
 
 export const createProduto = async (req, res) => {
@@ -16,7 +15,7 @@ export const createProduto = async (req, res) => {
 export const getAllProdutos = async (req, res) => {
   try {
     const produtos = await db.Produto.findAll({
-      include: [{ model: db.Categoria, as: 'Categoria' }], // Relacionamento com Categoria, se houver
+      include: [{ model: db.Categoria, as: 'Categoria' }],
     });
     res.status(200).json({ message: 'Lista de produtos recuperada com sucesso', produtos });
   } catch (error) {
@@ -80,5 +79,68 @@ export const deleteProduto = async (req, res) => {
   } catch (error) {
     console.error('Erro ao deletar produto:', error);
     res.status(500).json({ message: 'Erro ao deletar produto' });
+  }
+};
+
+// ✅ Adicionar quantidade ao estoque
+export const adicionarProduto = async (req, res) => {
+  const { id } = req.params;
+  const { quantidade } = req.body;
+
+  try {
+    const produto = await db.Produto.findByPk(id);
+    if (!produto) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
+    }
+
+    produto.qtd_estoque += quantidade;
+    await produto.save();
+
+    res.status(200).json({ message: `Quantidade adicionada com sucesso. Estoque atual: ${produto.qtd_estoque}` });
+  } catch (error) {
+    console.error('Erro ao adicionar produto ao estoque:', error);
+    res.status(500).json({ message: 'Erro ao adicionar produto ao estoque' });
+  }
+};
+
+// ✅ Remover quantidade do estoque
+export const removerProduto = async (req, res) => {
+  const { id } = req.params;
+  const { quantidade } = req.body;
+
+  try {
+    const produto = await db.Produto.findByPk(id);
+    if (!produto) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
+    }
+
+    if (produto.qtd_estoque < quantidade) {
+      return res.status(400).json({ message: 'Estoque insuficiente' });
+    }
+
+    produto.qtd_estoque -= quantidade;
+    await produto.save();
+
+    res.status(200).json({ message: `Quantidade removida com sucesso. Estoque atual: ${produto.qtd_estoque}` });
+  } catch (error) {
+    console.error('Erro ao remover produto do estoque:', error);
+    res.status(500).json({ message: 'Erro ao remover produto do estoque' });
+  }
+};
+
+// ✅ Mostrar quantidade de um produto
+export const getQuantidadeProduto = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const produto = await db.Produto.findByPk(id);
+    if (!produto) {
+      return res.status(404).json({ message: 'Produto não encontrado' });
+    }
+
+    res.status(200).json({ message: `Quantidade atual do produto: ${produto.qtd_estoque}` });
+  } catch (error) {
+    console.error('Erro ao buscar quantidade do produto:', error);
+    res.status(500).json({ message: 'Erro ao buscar quantidade do produto' });
   }
 };

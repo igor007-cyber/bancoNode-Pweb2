@@ -1,4 +1,5 @@
 // models/index.js
+import config from '../config/config.js'; 
 import fs from 'fs/promises'; // Use a versão assíncrona do fs
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -11,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-import config from '../config/config.cjs'; // Importação do config
+
 
 const db = {};
 

@@ -1,7 +1,7 @@
 'use strict';
 import { Model}  from 'sequelize';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Pedido extends Model {
     static associate(models) {
 
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'cliente'
       });
 
-      Pedido.hasMany(models.Produto, {
+      Pedido.belongsToMany(models.Produto, {
         through: models.PedidoHasProduto,
         foreignKey: 'idPedido',
         as: 'produtos'

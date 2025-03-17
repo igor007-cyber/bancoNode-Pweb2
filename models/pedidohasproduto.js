@@ -1,7 +1,7 @@
 'use strict';
 import { Model}  from 'sequelize';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class PedidoHasProduto extends Model {
     static associate(models) {
       // Um PedidoHasProduto pertence a um Pedido

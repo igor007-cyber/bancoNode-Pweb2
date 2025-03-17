@@ -2,7 +2,7 @@
 import { Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Usuario extends Model {
     static associate(models) {
       Usuario.hasMany(models.Cliente, {
@@ -27,12 +27,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true, // Validação para garantir que seja um e-mail válido
+          isEmail: true, 
         },
       },
       tipo: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM('admin', 'cliente'), 
         allowNull: false,
+        defaultValue: 'cliente'
       }
     },
     {
@@ -43,13 +44,11 @@ module.exports = (sequelize, DataTypes) => {
 
       hooks: {
         beforeCreate: async (usuario) => {
-          const salt = await bcrypt.genSalt(10);
-          usuario.senha = await bcrypt.hash(usuario.senha, salt);
+          usuario.senha = await bcrypt.hash(usuario.senha, 10);
         },
         beforeUpdate: async (usuario) => {
           if (usuario.changed('senha')) {
-            const salt = await bcrypt.genSalt(10);
-            usuario.senha = await bcrypt.hash(usuario.senha, salt);
+            usuario.senha = await bcrypt.hash(usuario.senha, 10);
           }
         }
       }

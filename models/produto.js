@@ -1,18 +1,18 @@
 'use strict';
 import { Model}  from 'sequelize';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Produto extends Model {
     static associate(models) {
      
-      Produto.hasMany(models.Pedido, {
+      Produto.belongsToMany(models.Pedido, {
         through: models.PedidoHasProduto,
         foreignKey: 'idProduto',
         as: 'pedidos'
       });
 
       
-      Produto.hasMany(models.Carrinho, {
+      Produto.belongsToMany(models.Carrinho, {
         through: models.ProdutoHasCarrinho,
         foreignKey: 'idProduto',
         as: 'carrinhos'

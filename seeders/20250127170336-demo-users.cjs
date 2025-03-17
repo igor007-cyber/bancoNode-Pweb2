@@ -8,9 +8,7 @@ module.exports = {
         nome: 'Felipe',
         email: 'felipe@gmail.com',
         senha: '123456',
-        tipo: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        tipo: "admin",
       }
     ]);
   },

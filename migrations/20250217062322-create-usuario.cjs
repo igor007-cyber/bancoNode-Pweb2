@@ -23,16 +23,19 @@ module.exports = {
         unique: true
       },
       tipo: {
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.ENUM('admin', 'cliente'), 
+        defaultValue: 'cliente',
         allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },

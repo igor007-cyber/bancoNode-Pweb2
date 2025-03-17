@@ -129,6 +129,7 @@ export const removerProduto = async (req, res) => {
 };
 
 // ✅ Mostrar quantidade de um produto
+
 export const getQuantidadeProduto = async (req, res) => {
   const { id } = req.params;
 

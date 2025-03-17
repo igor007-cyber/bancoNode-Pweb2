@@ -21,7 +21,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: 'Senha inválida' });
     }
 
-    const token = jwt.sign({ id: usuario.idUsuario, role: usuario.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, process.env.JWT_SECRET, {
       expiresIn: '1h', 
     });
 
@@ -42,14 +42,10 @@ export const signUp = async (req, res) => {
       return res.status(400).json({ message: 'Usuário já existe' });
     }
 
-
-    const senhaHash = await bcrypt.hash(senha, 10);
-
-
     const novoUsuario = await db.Usuario.create({
       nome,
       email,
-      senha: senhaHash,
+      senha,
       telefone
     });
 

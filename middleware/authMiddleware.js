@@ -23,7 +23,7 @@ export const authenticationToken = (req, res, next) => {
 
 export const authorizedRole = (role) => {
   return (req, res, next) => {
-    if (!req.usuario || req.usuario.role !== role) {
+    if (!req.usuario || req.usuario.tipo !== role) {
       return res.status(403).json({ message: 'Acesso negado' });
     }
     next();

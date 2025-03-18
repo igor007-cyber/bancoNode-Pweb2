@@ -1,8 +1,8 @@
 'use strict';
-import { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-export default (sequelize, DataTypes) => {
+export default(sequelize, DataTypes) => {
   class Usuario extends Model {
     static associate(models) {
       Usuario.hasMany(models.Cliente, {
@@ -27,13 +27,13 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true, 
+          isEmail: true, // Validação para garantir que seja um e-mail válido
         },
       },
       tipo: {
-        type: DataTypes.ENUM('admin', 'cliente'), 
-        allowNull: false,
-        defaultValue: 'cliente'
+        type: DataTypes.ENUM('admin', 'cliente'),
+        defaultValue:'cliente',
+        allowNull: false
       }
     },
     {

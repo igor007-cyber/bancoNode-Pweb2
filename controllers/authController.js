@@ -21,7 +21,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: 'Senha inválida' });
     }
 
-    const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, process.env.JWT_SECRET, {
+     const token = jwt.sign({ id: usuario.id, tipo: usuario.tipo }, process.env.JWT_SECRET, {
       expiresIn: '1h', 
     });
 
@@ -48,7 +48,6 @@ export const signUp = async (req, res) => {
       senha,
       telefone
     });
-
     
     const usuario = novoUsuario.get({ plain: true });
     delete usuario.senha;

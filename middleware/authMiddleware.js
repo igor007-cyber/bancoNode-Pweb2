@@ -11,18 +11,22 @@ export const authenticationToken = (req, res, next) => {
     return res.status(401).json({ message: 'Token não foi fornecido' });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, usuario) => {
-    if (err) {
-      return res.status(403).json({ message: 'Token inválido ou expirado' });
-    }
+  const playload = jwt.verify(token, process.env.JWT_SECRET);
+  
+  if(!playload) {
+    return res.status(403).json({ message: 'Token inválido ou expirado' });
+  }
 
-    req.usuario = usuario;
+    req.usuario = playload;
     next();
-  });
+
 };
 
 export const authorizedRole = (role) => {
   return (req, res, next) => {
+
+    console.log(req.usuario)
+
     if (!req.usuario || req.usuario.tipo !== role) {
       return res.status(403).json({ message: 'Acesso negado' });
     }

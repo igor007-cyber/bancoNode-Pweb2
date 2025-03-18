@@ -84,3 +84,20 @@ export const deleteCliente = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar cliente' });
   }
 };
+
+export const getClienteByCPF = async (req, res) => {
+  const { cpf } = req.params; // Obtém o CPF da URL
+
+  try {
+    const cliente = await db.Cliente.findOne({ where: { cpf } });
+
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente não encontrado' });
+    }
+
+    res.status(200).json({ message: 'Cliente encontrado com sucesso', cliente });
+  } catch (error) {
+    console.error('Erro ao buscar cliente pelo CPF:', error);
+    res.status(500).json({ message: 'Erro ao buscar cliente' });
+  }
+};

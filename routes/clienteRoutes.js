@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   createCliente,
-  listClientes,
+  getAllClientes,
   getClienteById,
   getClienteByCPF,
   updateCliente,
@@ -13,7 +13,7 @@ const router = express.Router();
 
 // Rotas protegidas para clientes
 router.post('/clientes', authenticationToken, createCliente);
-router.get('/clientes', authenticationToken, listClientes);
+router.get('/clientes', authenticationToken, getAllClientes);
 router.get('/clientes/:id', authenticationToken, getClienteById);
 router.get('/clientes/cpf/:cpf', authenticationToken, getClienteByCPF);
 router.put('/clientes/:id', authenticationToken, updateCliente);

@@ -1,5 +1,4 @@
-// models/index.js
-import config from '../config/config.js'; 
+import config from '../config/config.js'; // Importação do config
 import fs from 'fs/promises'; // Use a versão assíncrona do fs
 import path from 'path';
 import { fileURLToPath } from 'url';

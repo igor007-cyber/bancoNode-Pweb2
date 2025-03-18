@@ -23,8 +23,8 @@ module.exports = {
         unique: true
       },
       tipo: {
-        type: DataTypes.ENUM('admin', 'cliente'), 
-        defaultValue: 'cliente',
+        type: Sequelize.ENUM('admin', 'cliente'),
+        defaultValue:'cliente',
         allowNull: false
       },
       createdAt: {

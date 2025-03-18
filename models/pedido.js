@@ -13,7 +13,7 @@ export default (sequelize, DataTypes) => {
       Pedido.belongsToMany(models.Produto, {
         through: models.PedidoHasProduto,
         foreignKey: 'idPedido',
-        as: 'produtos'
+        as: 'produtos'  
       });
 
       Pedido.hasOne(models.EnderecoEntrega, {

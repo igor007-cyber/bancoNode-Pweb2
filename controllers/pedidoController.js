@@ -42,31 +42,6 @@ export const getPedidoById = async (req, res) => {
   }
 };
 
-export const updatePedido = async (req, res) => {
-  const { id } = req.params;
-  const { data_pedido, status, valor_total, data_envio, idCliente, descricao } = req.body;
-
-  try {
-    const pedido = await db.Pedido.findByPk(id);
-    if (!pedido) {
-      return res.status(404).json({ message: 'Pedido não encontrado' });
-    }
-
-    pedido.data_pedido = data_pedido;
-    pedido.status = status;
-    pedido.valor_total = valor_total;
-    pedido.data_envio = data_envio;
-    pedido.idCliente = idCliente;
-    pedido.descricao = descricao;
-    await pedido.save();
-
-    res.status(200).json({ message: 'Pedido atualizado com sucesso', pedido });
-  } catch (error) {
-    console.error('Erro ao atualizar pedido:', error);
-    res.status(500).json({ message: 'Erro ao atualizar pedido' });
-  }
-};
-
 export const deletePedido = async (req, res) => {
   const { id } = req.params;
 
@@ -111,9 +86,9 @@ export const addProduto = async (req, res) => {
       return res.status(400).json({ message: 'Estoque insuficiente para a quantidade solicitada' });
     }
 
-    // 🔹 Atualiza o estoque do produto
-    produto.qtd_estoque -= qtdProduto;
-    await produto.save();
+    // // 🔹 Atualiza o estoque do produto
+    // produto.qtd_estoque -= qtdProduto;
+    // await produto.save();
 
     // 🔹 Adiciona o produto ao pedido (supondo que existe um modelo PedidoProduto para associar)
     await db.PedidoProduto.create({
@@ -129,3 +104,49 @@ export const addProduto = async (req, res) => {
   }
 };
 
+export const removerPedido = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const pedido = await db.Pedido.findByPk(id);
+    if (!pedido) {
+      return res.status(404).json({ message: 'Pedido não encontrado' });
+    }
+
+    // 🔹 Só permite remover pedidos que ainda estão abertos
+    if (pedido.status !== 'aberto') {
+      return res.status(400).json({ message: 'Não é possível remover um pedido já finalizado' });
+    }
+
+    await pedido.destroy();
+    res.status(200).json({ message: 'Pedido removido com sucesso' });
+  } catch (error) {
+    console.error('Erro ao remover pedido:', error);
+    res.status(500).json({ message: 'Erro ao remover pedido' });
+  }
+};
+
+export const finalizarPedido = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const pedido = await db.Pedido.findByPk(id);
+    if (!pedido) {
+      return res.status(404).json({ message: 'Pedido não encontrado' });
+    }
+
+    // 🔹 Verifica se o pedido já está finalizado
+    if (pedido.status === 'finalizado') {
+      return res.status(400).json({ message: 'O pedido já foi finalizado' });
+    }
+
+    pedido.status = 'finalizado';
+    pedido.data_envio = new Date(); // Define a data de finalização/envio
+    await pedido.save();
+
+    res.status(200).json({ message: 'Pedido finalizado com sucesso', pedido });
+  } catch (error) {
+    console.error('Erro ao finalizar pedido:', error);
+    res.status(500).json({ message: 'Erro ao finalizar pedido' });
+  }
+};

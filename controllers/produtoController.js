@@ -118,8 +118,8 @@ export const removerProduto = async (req, res) => {
       return res.status(400).json({ message: 'Estoque insuficiente' });
     }
 
-    produto.qtd_estoque -= quantidade;
-    await produto.save();
+    // produto.qtd_estoque -= quantidade;
+    // await produto.save();
 
     res.status(200).json({ message: `Quantidade removida com sucesso. Estoque atual: ${produto.qtd_estoque}` });
   } catch (error) {
@@ -128,7 +128,6 @@ export const removerProduto = async (req, res) => {
   }
 };
 
-// ✅ Mostrar quantidade de um produto
 
 export const getQuantidadeProduto = async (req, res) => {
   const { id } = req.params;

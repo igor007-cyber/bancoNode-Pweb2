@@ -19,4 +19,4 @@ router.get('/clientes/cpf/:cpf', authenticationToken, getClienteByCPF);
 router.put('/clientes/:id', authenticationToken, updateCliente);
 router.delete('/clientes/:id', authenticationToken, deleteCliente);
 
-export default router;
+export default routerCliente;

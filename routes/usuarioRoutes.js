@@ -21,4 +21,4 @@ router.delete('/usuarios/:id', authenticationToken, deleteUsuario); // Excluir u
 // Rota de login
 router.post('/usuarios/login', loginUsuario); // Login e geração de token
 
-export default router;
+export default routerUsuario;

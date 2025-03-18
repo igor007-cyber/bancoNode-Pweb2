@@ -27,4 +27,4 @@ router.post('/pedidos/:id/produtos', authenticationToken, addProduto); // Adicio
 router.delete('/pedidos/:id/produtos/:produtoId', authenticationToken, removeProdutoDoPedido); // Remove produto do pedido
 router.patch('/pedidos/:id/status', authenticationToken, atualizarStatusPedido); // Atualiza status do pedido
 
-export default router;
+export default routerPedido;

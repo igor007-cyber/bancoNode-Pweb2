@@ -25,4 +25,4 @@ router.patch('/produtos/:id/add', authenticationToken, adicionarProduto); // Adi
 router.patch('/produtos/:id/remove', authenticationToken, removerProduto); // Remove quantidade do estoque
 router.get('/produtos/:id/quantidade', authenticationToken, getQuantidadeProduto); // Obtém a quantidade do produto
 
-export default router;
+export default routerProduto;

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors'; // Importe o pacote cors
 import router from './routes/authRoutes.js';
+import routerProduto from './routes/produtoRoutes.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Rotas
 app.use("/api", router);
+app.use('/produto', routerProduto)
 // app.use("/teste", routerCliente);
 
 export default app;

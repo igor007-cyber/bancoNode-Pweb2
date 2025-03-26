@@ -11,18 +11,18 @@ import {
 } from '../controllers/produtoController.js';
 import { authenticationToken } from '../middleware/authMiddleware.js';
 
-const router = express.Router();
+const routerProduto = express.Router();
 
 // Rotas protegidas para produtos
-router.post('/produtos', authenticationToken, createProduto);
-router.get('/produtos', authenticationToken, getAllProdutos);
-router.get('/produtos/:id', authenticationToken, getProdutoById);
-router.put('/produtos/:id', authenticationToken, updateProduto);
-router.delete('/produtos/:id', authenticationToken, deleteProduto);
+routerProduto.post('/produtos', authenticationToken, createProduto);
+routerProduto.get('/produtos', authenticationToken, getAllProdutos);
+routerProduto.get('/produtos/:id', authenticationToken, getProdutoById);
+routerProduto.put('/produtos/:id', authenticationToken, updateProduto);
+routerProduto.delete('/produtos/:id', authenticationToken, deleteProduto);
 
 // Rotas para gerenciamento de estoque
-router.patch('/produtos/:id/add', authenticationToken, adicionarProduto); // Adiciona quantidade ao estoque
-router.patch('/produtos/:id/remove', authenticationToken, removerProduto); // Remove quantidade do estoque
-router.get('/produtos/:id/quantidade', authenticationToken, getQuantidadeProduto); // Obtém a quantidade do produto
+routerProduto.patch('/produtos/:id/add', authenticationToken, adicionarProduto); // Adiciona quantidade ao estoque
+routerProduto.patch('/produtos/:id/remove', authenticationToken, removerProduto); // Remove quantidade do estoque
+routerProduto.get('/produtos/:id/quantidade', authenticationToken, getQuantidadeProduto); // Obtém a quantidade do produto
 
 export default routerProduto;

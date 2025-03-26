@@ -9,14 +9,14 @@ import {
 } from '../controllers/clienteController.js';
 import { authenticationToken } from '../middleware/authMiddleware.js';
 
-const router = express.Router();
+const routerCliente = express.Router();
 
 // Rotas protegidas para clientes
-router.post('/clientes', authenticationToken, createCliente);
-router.get('/clientes', authenticationToken, getAllClientes);
-router.get('/clientes/:id', authenticationToken, getClienteById);
-router.get('/clientes/cpf/:cpf', authenticationToken, getClienteByCPF);
-router.put('/clientes/:id', authenticationToken, updateCliente);
-router.delete('/clientes/:id', authenticationToken, deleteCliente);
+routerCliente.post('/clientes', authenticationToken, createCliente);
+routerCliente.get('/clientes', authenticationToken, getAllClientes);
+routerCliente.get('/clientes/:id', authenticationToken, getClienteById);
+routerCliente.get('/clientes/cpf/:cpf', authenticationToken, getClienteByCPF);
+routerCliente.put('/clientes/:id', authenticationToken, updateCliente);
+routerCliente.delete('/clientes/:id', authenticationToken, deleteCliente);
 
 export default routerCliente;

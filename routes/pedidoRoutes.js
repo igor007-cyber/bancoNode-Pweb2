@@ -12,19 +12,19 @@ import {
 } from '../controllers/pedidoController.js';
 import { authenticationToken } from '../middleware/authMiddleware.js';
 
-const router = express.Router();
+const routerPedido = express.Router();
 
 // Rotas protegidas para pedidos
-router.post('/pedidos', authenticationToken, createPedido);
-router.get('/pedidos', authenticationToken, getAllPedidos);
-router.get('/pedidos/:id', authenticationToken, getPedidoById);
-router.get('/pedidos/cliente/:id', authenticationToken, getPedidosByCliente);
-router.put('/pedidos/:id', authenticationToken, updatePedido);
-router.delete('/pedidos/:id', authenticationToken, deletePedido);
+routerPedido.post('/pedidos', authenticationToken, createPedido);
+routerPedido.get('/pedidos', authenticationToken, getAllPedidos);
+routerPedido.get('/pedidos/:id', authenticationToken, getPedidoById);
+routerPedido.get('/pedidos/cliente/:id', authenticationToken, getPedidosByCliente);
+routerPedido.put('/pedidos/:id', authenticationToken, updatePedido);
+routerPedido.delete('/pedidos/:id', authenticationToken, deletePedido);
 
 // Novas rotas adicionadas
-router.post('/pedidos/:id/produtos', authenticationToken, addProduto); // Adiciona produto ao pedido
-router.delete('/pedidos/:id/produtos/:produtoId', authenticationToken, removeProdutoDoPedido); // Remove produto do pedido
-router.patch('/pedidos/:id/status', authenticationToken, atualizarStatusPedido); // Atualiza status do pedido
+routerPedido.post('/pedidos/:id/produtos', authenticationToken, addProduto); // Adiciona produto ao pedido
+routerPedido.delete('/pedidos/:id/produtos/:produtoId', authenticationToken, removeProdutoDoPedido); // Remove produto do pedido
+routerPedido.patch('/pedidos/:id/status', authenticationToken, atualizarStatusPedido); // Atualiza status do pedido
 
 export default routerPedido;

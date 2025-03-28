@@ -12,8 +12,8 @@ const routerEndereco = express.Router();
 
 // Rotas protegidas para endereços de entrega
 routerEndereco.post('/enderecos-entrega', authenticationToken, createEnderecoEntrega);
-routerEndereco.get('/enderecos-entrega', authenticationToken, getAllEnderecosEntrega);
-routerEndereco.get('/enderecos-entrega/:id', authenticationToken, getEnderecoEntregaById);
+routerEndereco.get('/enderecos-entrega', getAllEnderecosEntrega);
+routerEndereco.get('/enderecos-entrega/:id', getEnderecoEntregaById);
 routerEndereco.put('/enderecos-entrega/:id', authenticationToken, updateEnderecoEntrega);
 routerEndereco.delete('/enderecos-entrega/:id', authenticationToken, deleteEnderecoEntrega);
 

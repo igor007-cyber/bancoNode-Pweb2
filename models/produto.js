@@ -29,7 +29,15 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  
+    preco: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    categoria: DataTypes.STRING,
+    qtd_estoque: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Produto',

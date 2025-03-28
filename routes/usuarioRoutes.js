@@ -13,8 +13,8 @@ const routerUsuario = express.router();
 
 // Rotas de usuário
 routerUsuario.post('/usuarios', createUsuario); // Criar usuário
-routerUsuario.get('/usuarios', authenticationToken, getAllUsuarios); // Listar usuários (protegido)
-routerUsuario.get('/usuarios/:id', authenticationToken, getUsuarioById); // Buscar usuário por ID (protegido)
+routerUsuario.get('/usuarios', getAllUsuarios); // Listar usuários (protegido)
+routerUsuario.get('/usuarios/:id', getUsuarioById); // Buscar usuário por ID (protegido)
 routerUsuario.put('/usuarios/:id', authenticationToken, updateUsuario); // Atualizar usuário (protegido)
 routerUsuario.delete('/usuarios/:id', authenticationToken, deleteUsuario); // Excluir usuário (protegido)
 

@@ -14,9 +14,9 @@ export const createProduto = async (req, res) => {
 
 export const getAllProdutos = async (req, res) => {
   try {
-    const produtos = await db.Produto.findAll({
-      include: [{ model: db.Categoria, as: 'Categoria' }],
-    });
+    const produtos = await db.Produto.findAll(
+      //include: [{ model: db.Categoria, as: 'Categoria' }],
+    );
     res.status(200).json({ message: 'Lista de produtos recuperada com sucesso', produtos });
   } catch (error) {
     console.error('Erro ao listar produtos:', error);

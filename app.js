@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors'; // Importe o pacote cors
 import router from './routes/authRoutes.js';
 import routerProduto from './routes/produtoRoutes.js';
+import routerCliente from './routes/clienteRoutes.js';
+import routerPedido from './routes/pedidoRoutes.js';
+import routerEndereco from './routes/enderecoEntregaRoutes.js';
 
 const app = express();
 
@@ -17,6 +20,10 @@ app.use(express.json());
 // Rotas
 app.use("/api", router);
 app.use('/produto', routerProduto)
+app.use("/cliente", routerCliente)
+app.use('/pedido', routerPedido)
+app.use('/endereco', routerEndereco)
+
 // app.use("/teste", routerCliente);
 
 export default app;

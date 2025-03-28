@@ -27,7 +27,7 @@ export default(sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true, // Validação para garantir que seja um e-mail válido
+          isEmail: true, // Validação para garantir q um e-mail válido
         },
       },
       tipo: {

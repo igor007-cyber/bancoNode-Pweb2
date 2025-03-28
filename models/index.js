@@ -28,20 +28,7 @@ async function initializeDatabase() {
   // Lê os arquivos do diretório de forma assíncrona
   const files = await fs.readdir(__dirname);
 
-  // Filtra e carrega os modelos
-  for (const file of files) {
-    if (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.endsWith('.js') &&
-      file.indexOf('.test.js') === -1
-    ) {
-      const modelPath = path.join(__dirname, file);
-      const modelURL = new URL(`file://${modelPath}`).href; // Converte para URL
-      const model = (await import(modelURL)).default(sequelize, Sequelize.DataTypes) ;
-      db[model.name] = model;
-    }
-  }
+  
 
   // Configura as associações
   Object.keys(db).forEach(modelName => {

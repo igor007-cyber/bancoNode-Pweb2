@@ -15,6 +15,15 @@ app.use(cors({
   credentials: true // Permite o envio de cookies ou autenticação
 }));
 
+app.use(express.json());
+
+// Rotas
+app.use("/api", router);
+app.use('/produto', routerProduto)
+app.use("/cliente", routerCliente)
+app.use('/pedido', routerPedido)
+app.use('/endereco', routerEndereco)
+
 // app.use("/teste", routerCliente);
 
 export default app;

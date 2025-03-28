@@ -2,11 +2,20 @@
 import db from '../models/index.js';
 
 export const createCliente = async (req, res) => {
-  const { nome, telefone, cpf, rua, bairro, cidade, usuario_idUsuario } = req.body;
-  
+  const { nome, telefone, cpf, rua, bairro, cidade, email, senha } = req.body;
+  console.log(req.body);
   try {
-    const cliente = await db.Cliente.create({ nome, telefone, cpf, rua, bairro, cidade, usuario_idUsuario });
+    const existingUser = await db.Usuario.findOne({ where: { email } });
+
+    if (existingUser) {
+      return res.status(409).json({ message: 'E-mail já cadastrado' });
+    }
+
+    const usuario = await db.Usuario.create({ nome, email, senha});
+
+    const cliente = await db.Cliente.create({ nome, telefone, cpf, rua, bairro, cidade, idUsuario: usuario.id });
     res.status(201).json({ message: 'Cliente criado com sucesso', cliente });
+
   } catch (error) {
     console.error('Erro ao criar cliente:', error);
     res.status(500).json({ message: 'Erro ao criar cliente' });
@@ -15,9 +24,7 @@ export const createCliente = async (req, res) => {
 
 export const getAllClientes = async (req, res) => {
   try {
-    const clientes = await db.Cliente.findAll({
-      include: [{ model: db.Usuario, as: 'Usuario' }], // Relacionamento com Usuário, se houver
-    });
+    const clientes = await db.Cliente.findAll();
     res.status(200).json({ message: 'Lista de clientes recuperada com sucesso', clientes });
   } catch (error) {
     console.error('Erro ao listar clientes:', error);

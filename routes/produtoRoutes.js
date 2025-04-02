@@ -14,7 +14,7 @@ import { authenticationToken } from '../middleware/authMiddleware.js';
 const routerProduto = express.Router();
 
 // Rotas protegidas para produtos
-routerProduto.post('/cadastrar', authenticationToken, createProduto);
+routerProduto.post('/cadastrar', authenticationToken,createProduto);
 routerProduto.get('/listar', getAllProdutos);
 routerProduto.get('/lstar/:id', getProdutoById);
 routerProduto.put('/produtos/:id', authenticationToken, updateProduto);

@@ -18,4 +18,16 @@ export default (sequelize, DataTypes) => {
     }
   }
 
-  
+  Cliente.init({
+    nome: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    telefone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      // validate: {
+      //   is: /^[0-9]{10,11}$/i, // Apenas números (10 ou 11 dígitos)
+      // },
+    },
+   

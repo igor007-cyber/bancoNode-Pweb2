@@ -47,6 +47,18 @@ export default (sequelize, DataTypes) => {
       }
     }, 
     {
-    
+      sequelize,
+      modelName: 'Cliente',
+      tableName: 'clientes',
+      timestamps: false,
+      hooks: {
+        beforeCreate: (cliente) => {
+          // Remove traços e pontos do CPF antes de salvar
+          cliente.cpf = cliente.cpf.replace(/\D/g, '');
+        },
+      },
+    });
+  
+    return Cliente;
   };
   

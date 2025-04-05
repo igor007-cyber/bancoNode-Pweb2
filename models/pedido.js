@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
 
       Pedido.belongsTo(models.Cliente, {
         foreignKey: 'idCliente',
-        as: 'cliente'
+        as: 'Cliente'
       });
 
       Pedido.belongsToMany(models.Produto, {

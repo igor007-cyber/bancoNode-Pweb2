@@ -37,10 +37,10 @@ export default (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'PedidoHasProduto',
-    tableName: 'pedidos_has_produtos',
-    timestamps: false
+    modelName: 'PedidoHasProduto', 
+    tableName: 'pedidohasprodutos',
+    timestamps: true
   });
-
+ 
   return PedidoHasProduto;
 };

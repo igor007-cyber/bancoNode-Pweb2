@@ -12,7 +12,7 @@ import { authenticationToken } from '../middleware/authMiddleware.js';
 const routerCliente = express.Router();
 
 // Rotas protegidas para clientes
-routerCliente.post('/registro', createCliente);
+routerCliente.post('/registro', authenticationToken,createCliente);
 routerCliente.get('/listar', getAllClientes);
 routerCliente.get('/listar/:id',getClienteById);
 routerCliente.get('/listar/cpf/:cpf',getClienteByCPF);

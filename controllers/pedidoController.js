@@ -3,7 +3,7 @@ import db from '../models/index.js';
 
 export const createPedido = async (req, res) => {
   const { data_pedido, status, valor_total, data_envio, idCliente, descricao } = req.body;
-
+  console.log(req.body);
   try {
     const pedido = await db.Pedido.create({ data_pedido, status, valor_total, data_envio, idCliente, descricao });
     res.status(201).json({ message: 'Pedido criado com sucesso', pedido });
@@ -15,10 +15,12 @@ export const createPedido = async (req, res) => {
 
 export const getAllPedidos = async (req, res) => {
   try {
+    console.log('entrou');
     const pedidos = await db.Pedido.findAll({
       include: [{ model: db.Cliente, as: 'Cliente' }], // Relacionamento com Client
     });
     res.status(200).json({ message: 'Lista de pedidos recuperada com sucesso', pedidos });
+
   } catch (error) {
     console.error('Erro ao listar pedidos:', error);
     res.status(500).json({ message: 'Erro ao listar pedidos' });
@@ -47,7 +49,7 @@ export const deletePedido = async (req, res) => {
 
   try {
     const pedido = await db.Pedido.findByPk(id);
-    if (!pedido) {
+    if (!pedido) {  
       return res.status(404).json({ message: 'Pedido não encontrado' });
     }
 

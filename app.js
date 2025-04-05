@@ -5,6 +5,7 @@ import routerProduto from './routes/produtoRoutes.js';
 import routerCliente from './routes/clienteRoutes.js';
 import routerPedido from './routes/pedidoRoutes.js';
 import routerEndereco from './routes/enderecoEntregaRoutes.js';
+import routerPedidoProduto from './routes/pedidohasprodutoRoutes.js';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/produto', routerProduto)
 app.use("/cliente", routerCliente)
 app.use('/pedido', routerPedido)
 app.use('/endereco', routerEndereco)
+app.use('/compra', routerPedidoProduto)
 
 // app.use("/teste", routerCliente);
 

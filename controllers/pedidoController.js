@@ -1,4 +1,3 @@
-// controllers/pedidoController.js
 import db from '../models/index.js';
 
 export const createPedido = async (req, res) => {
@@ -6,7 +5,11 @@ export const createPedido = async (req, res) => {
   console.log(req.body);
   try {
     const pedido = await db.Pedido.create({ data_pedido, status, valor_total, data_envio, idCliente, descricao });
-    res.status(201).json({ message: 'Pedido criado com sucesso', pedido });
+    res.status(201).json({ 
+      message: 'Pedido criado com sucesso', 
+      pedido, 
+      idPedido: pedido.id // <-- retorna o idPedido separado
+    });
   } catch (error) {
     console.error('Erro ao criar pedido:', error);
     res.status(500).json({ message: 'Erro ao criar pedido' });

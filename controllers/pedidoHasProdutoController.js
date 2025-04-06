@@ -4,7 +4,6 @@ import db from '../models/index.js';
 export const addProdutoAoPedido = async (req, res) => {
   const { idPedido } = req.params;
   const { idProduto, quantidade, preco_unitario } = req.body;
-
    
   try {
     const pedido = await db.Pedido.findByPk(idPedido);

@@ -5,12 +5,12 @@ import { authenticationToken } from '../middleware/authMiddleware.js';
 const routerPedidoProduto = express.Router();
 
 // Adicionar um produto a um pedido
-routerPedidoProduto.post('/pedidos/:idPedido/produtos', addProdutoAoPedido);
+routerPedidoProduto.post('/pedidos/:idPedido/produtos', authenticationToken,addProdutoAoPedido);
 
 // Listar todos os produtos de um pedido
 routerPedidoProduto.get('/pedidos/:idPedido/produtos', getProdutosDoPedido);
 
 // Remover um produto de um pedido
-routerPedidoProduto.delete('/pedidos/:idPedido/produtos/:idProduto', removerProdutoDoPedido);
+routerPedidoProduto.delete('/pedidos/:idPedido/produtos/:idProduto', authenticationToken ,removerProdutoDoPedido);
 
 export default routerPedidoProduto;
